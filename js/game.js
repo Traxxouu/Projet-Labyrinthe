@@ -18,10 +18,12 @@ export class Game {
     this.buttonRestart.addEventListener('click', () => {
       this.restart();
     });
+    window.controlsEnabled = true;
   }
 
   start() {
     this.gameOver = false;
+    window.controlsEnabled = true;
     this.startTime = Date.now();
     this.elapsedSeconds = 0;
 
@@ -57,6 +59,15 @@ export class Game {
 
   endGame() {
     this.gameOver = true;
+
+    window.controlsEnabled = false;
+
+    if (this.player && this.player.keys) {
+      this.player.keys.forward = false;
+      this.player.keys.backward = false;
+      this.player.keys.left = false;
+      this.player.keys.right = false;
+    }
 
     const timeStr = this.formatTime(this.elapsedSeconds);
     this.finalChrono.textContent = 'Temps final : ' + timeStr;

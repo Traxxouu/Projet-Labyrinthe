@@ -41,6 +41,7 @@ export class Player {
 
   listenKeys() {
     window.addEventListener('keydown', (e) => {
+      if (window.controlsEnabled === false) return;
       if (e.key === 'z' || e.key === 'Z' || e.key === 'ArrowUp') {
         this.keys.forward = true;
       }
@@ -55,6 +56,7 @@ export class Player {
       }
     });
     window.addEventListener('keyup', (e) => {
+      if (window.controlsEnabled === false) return;
       if (e.key === 'z' || e.key === 'Z' || e.key === 'ArrowUp') {
         this.keys.forward = false;
       }
