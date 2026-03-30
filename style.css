@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+}
+
+canvas {
+    display: block;
+}
+
+#mainContainer {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    z-index: 1000;
+    font-family: Arial, sans-serif;
+}
+
+#chrono {
+    background: rgba(0,0,0,0.6);
+    color: #ffffff;
+    padding: 8px 15px;
+    border-radius: 30px;
+    font-size: 18px;
+}
