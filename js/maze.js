@@ -15,6 +15,27 @@ export class Maze {
     this.cols = 0;
     this.rows = 0;
 
+    // Charger les textures
+    const loader = new THREE.TextureLoader();
+
+    // Texture pour le sol
+    this.floorTexture = loader.load('/textures/floor.jpg');
+    this.floorTexture.wrapS = THREE.RepeatWrapping;
+    this.floorTexture.wrapT = THREE.RepeatWrapping;
+
+    this.floorNormal = loader.load('/textures/floor_normal.jpg');
+    this.floorNormal.wrapS = THREE.RepeatWrapping;
+    this.floorNormal.wrapT = THREE.RepeatWrapping;
+
+    // Texture pour le mul 
+    this.wallTexture = loader.load('/textures/wall.jpg');
+    this.wallTexture.wrapS = THREE.RepeatWrapping;
+    this.wallTexture.wrapT = THREE.RepeatWrapping;
+
+    this.wallNormal = loader.load('/textures/wall_normal.jpg');
+    this.wallNormal.wrapS = THREE.RepeatWrapping;
+    this.wallNormal.wrapT = THREE.RepeatWrapping;
+
     this.build(10, 10);
   }
 
@@ -90,7 +111,16 @@ export class Maze {
     const width = this.cols * CELL_SIZE;
     const depth = this.rows * CELL_SIZE;
     const geo = new THREE.PlaneGeometry(width + 10, depth + 10);
-    const mat = new THREE.MeshLambertMaterial({ color: 0x444444 });
+
+    // Repeat de la texture en fonction de la taille du labyrinthe
+    this.floorTexture.repeat.set(this.cols * 2, this.rows * 2);
+    this.floorNormal.repeat.set(this.cols * 2, this.rows * 2);
+
+    const mat = new THREE.MeshStandardMaterial({
+      map: this.floorTexture,
+      normalMap: this.floorNormal
+    });
+
     const floor = new THREE.Mesh(geo, mat);
     floor.rotation.x = -Math.PI / 2;
     floor.position.set(width / 2, 0, depth / 2);
@@ -100,7 +130,10 @@ export class Maze {
   }
 
   addWalls() {
-    const mat = new THREE.MeshLambertMaterial({ color: 0xaaaaaa });
+    const mat = new THREE.MeshStandardMaterial({
+      map: this.wallTexture,
+      normalMap: this.wallNormal
+    });
 
     for (let r = 0; r < this.rows; r++) {
       for (let c = 0; c < this.cols; c++) {
